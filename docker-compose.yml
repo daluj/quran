@@ -1,0 +1,69 @@
+services:
+
+  database:
+    image: postgis/postgis:latest
+    container_name: database
+    environment:
+      POSTGRES_DB: '${DB_DATABASE}'
+      POSTGRES_USER: '${DB_USER}'
+      POSTGRES_PASSWORD: '${DB_PASSWORD}'
+    volumes:
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    #  - ./database/data:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    network_mode: host
+
+  scrapyd:
+    build:
+      context: ./scrapyd
+    container_name: scrapyd
+    depends_on:
+      - database
+    volumes:
+      - ./.env:/app/.env
+      - ./scrapyd/getquran:/app/getquran
+    ports:
+      - 6800:6800
+    network_mode: host
+
+  directus:
+    image: directus/directus:latest
+    container_name: directus
+    depends_on:
+      - database
+    volumes:
+      - ./directus/database:/directus/database
+      - ./directus/uploads:/directus/uploads
+      - ./directus/extensions:/directus/extensions
+    ports:
+      - 8055:8055
+    environment:
+      KEY: "${DIRECTUS_KEY}"
+      SECRET: "${DIRECTUS_SECRET}"
+
+      DB_CLIENT: "pg"
+      DB_HOST: "${DB_HOST}"
+      DB_PORT: "${DB_PORT}"
+      DB_DATABASE: "${DB_DATABASE}"
+      DB_USER: "${DB_USER}"
+      DB_PASSWORD: "${DB_PASSWORD}"
+
+      ADMIN_EMAIL: "${ADMIN_EMAIL}"
+      ADMIN_PASSWORD: "${ADMIN_PASSWORD}"
+
+      WEBSOCKETS_ENABLED: true
+    
+      # Make sure to set this in production
+      # (see https://docs.directus.io/self-hosted/config-options#general)
+      # PUBLIC_URL: "https://directus.example.com"
+    network_mode: host
+  
+  app:
+    build: .
+    container_name: app
+    depends_on:
+      - scrapyd
+    ports:
+      - 5000:5000
+    network_mode: host
