@@ -18,7 +18,7 @@ Go to http://localhost:8055/ and login with the admin user on the .env file.
 
 ## Database
 
-The database table structure is on database/init.sql. Create a table with the same name for each spider as the spiders save the data in this way.
+The database table structure is on database/init.sql.
 
 ## Spiders
 
