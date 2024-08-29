@@ -49,9 +49,6 @@ class ApiQuranSpider(scrapy.Spider):
         verse_item = VerseItem()
         verse_item['surah_id'] = surah_id
         for verse in verses:
-            # Clean the text
-            arabic_text = json.dumps(verse.get('text_uthmani_simple'), ensure_ascii=True)
-
             verse_item['id'] = verse.get('verse_number')
-            verse_item['AR'] = arabic_text
+            verse_item['ar'] = json.dumps(verse.get('text_uthmani_simple').strip(), ensure_ascii=True)
             yield verse_item

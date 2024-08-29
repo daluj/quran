@@ -34,6 +34,6 @@ class WebQuranSpider(scrapy.Spider):
                 translation_item['surah_id'] = surah_id
                 translation_item['verse_id'] = verse_id
                 translation_item['text'] = text
-                translation_item['language_iso_code'] = 'EN'
+                translation_item['language_iso_code'] = 'en'
 
                 yield translation_item
