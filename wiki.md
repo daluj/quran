@@ -21,7 +21,7 @@ Change the ownership of the ./solr directory to match the user and group IDs tha
 Run the following commands to set the correct ownership and permissions on your host machine:
 
 ```bash
-sudo chmod -R 757 ./solr
+sudo chmod -R 777 ./solr
 ```
 
 # Verify the UID and GID in the Container
