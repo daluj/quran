@@ -1,16 +1,5 @@
 services:
 
-  solr:
-    build: 
-      context: ./solr
-      dockerfile: Dockerfile
-    container_name: solr
-    environment:
-      - SOLR_CORE=quran
-    ports:
-      - "8983:8983"
-    network_mode: host
-
   database:
     image: postgis/postgis:latest
     container_name: database
@@ -23,6 +12,11 @@ services:
     #  - ./database/data:/var/lib/postgresql/data
     ports:
       - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_DATABASE}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     network_mode: host
 
   scrapyd:
@@ -80,4 +74,17 @@ services:
     volumes:
       - ./data:/app/data
       - ./scripts:/app/scripts
+    network_mode: host
+
+  solr:
+    image: solr:latest
+    container_name: solr
+    ports:
+      - 8983:8983
+      - 9983:9983
+    volumes:
+      - ./solr:/opt/solr/server/solr/mycores
+    command:
+      - solr-precreate
+      - gettingstarted
     network_mode: host
