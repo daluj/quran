@@ -2,17 +2,31 @@
 
 This repo is for the purpose of demonstrating how to deploy a scraper using scrapy, scrapyd, scrapydweb, a PostgreSQL database and Directus together, with docker-compose.
 
-## How to run it on local
+# How to run it on local
 
+1. Ensure Permissions Locally:
+
+```bash
+chmod +x ./solr/entrypoint.sh
+```
+
+2. Build and Start Containers:
+
+``` bash
 docker compose up --build -d
+```
 
-# Scrapyd Web
+## Scrapyd Web
 
-Go to http://localhost:5000/ and you should be able to run your spiders
+Navigate to http://localhost:5000/ and you should be able to run your spiders
 
-# Directus
+## Directus
 
-Go to http://localhost:8055/ and login with the admin user on the .env file. 
+Navigate to http://localhost:8055/ and login with the admin user on the .env file. 
+
+## Solr
+
+Navigate to http://localhost:8983/solr to access the Solr admin interface.
 
 # Info
 
@@ -26,8 +40,14 @@ The spiders are located in scrapyd/getquran/spiders.
 
 ### arabicquranapi Spider
 
-This spider fetches data from [Quran.com](https://api-docs.quran.com/docs/category/quran.com-api), and saves the data to the database.
+This spider fetches the quran in Arabic from [Quran.com](https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran.json) and saves the data to the DB.
 
 ### englishquranweb Spider
 
-This spider scraps [Quran - Islam](https://www.quran-islam.org/main_topics/quran/quran_in_english/sura_1_to_7_(P1322).html) looking for the required data and saves the data to the database. 
+This spider scraps [Quran - Islam](https://www.quran-islam.org/main_topics/quran_in_english_(P1223).html) and saves the data to the DB. 
+
+## Scripts
+
+### quran_json_download.py
+
+This scripts fetches the Arabic Quran in JSON format and saves it to scripts/data/holy_quran.json

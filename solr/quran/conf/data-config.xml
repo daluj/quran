@@ -1,0 +1,16 @@
+<dataConfig>
+  <dataSource type="JdbcDataSource" 
+              driver="org.postgresql.Driver"
+              url="jdbc:postgresql://database:5432/quran"
+              user="${DB_USER}" 
+              password="${DB_PASSWORD}" />
+
+  <document>
+    <entity name="verses" query="SELECT * FROM verses">
+      <field column="id" name="id"/>
+      <field column="verse_id" name="verse_id"/>
+      <field column="surah_id" name="surah_id"/>
+      <dynamicField name="translation_*" column="translation"/>
+    </entity>
+  </document>
+</dataConfig>

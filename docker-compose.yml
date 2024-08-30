@@ -1,5 +1,16 @@
 services:
 
+  solr:
+    build: 
+      context: ./solr
+      dockerfile: Dockerfile
+    container_name: solr
+    environment:
+      - SOLR_CORE=quran
+    ports:
+      - "8983:8983"
+    network_mode: host
+
   database:
     image: postgis/postgis:latest
     container_name: database
