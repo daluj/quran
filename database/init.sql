@@ -36,5 +36,8 @@ CREATE TABLE IF NOT EXISTS translations (
 -- Index for faster lookups in verses
 CREATE INDEX idx_verses_surah_id ON verses(surah_id);
 
+-- If you frequently query verses based on both surah_id and verse id together
+CREATE INDEX idx_verses_surah_verse_id ON verses(surah_id, verse_id);
+
 -- Index for faster lookups by language_code in translations
 CREATE INDEX idx_translations_language_code ON translations(language_code);
