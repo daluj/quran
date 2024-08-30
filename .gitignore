@@ -1,2 +1,5 @@
 scrapyd/getquran/__pycache__/*
 scrapyd/getquran/spiders/__pycache__/*
+solr/logs/*
+solr/data/quran-core/conf/lang/*
+solr/data/quran-core/data/*

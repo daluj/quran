@@ -9,7 +9,7 @@ services:
       POSTGRES_PASSWORD: '${DB_PASSWORD}'
     volumes:
       - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
-    #  - ./database/data:/var/lib/postgresql/data
+      - ./database/data:/var/lib/postgresql/data
     ports:
       - 5432:5432
     healthcheck:
@@ -72,19 +72,18 @@ services:
     ports:
       - 5000:5000
     volumes:
-      - ./data:/app/data
       - ./scripts:/app/scripts
     network_mode: host
 
   solr:
-    image: solr:latest
+    build: ./solr
     container_name: solr
     ports:
       - 8983:8983
-      - 9983:9983
     volumes:
-      - ./solr:/opt/solr/server/solr/mycores
-    command:
-      - solr-precreate
-      - gettingstarted
+      - ./solr:/var/solr
+    environment:
+      - db.user="${DB_USER}"
+      - db.password="${DB_PASSWORD}"
+    command: solr-precreate quran-core
     network_mode: host
