@@ -840,6 +840,11 @@
       <str name="indent">true</str>
     </lst>
   </requestHandler>
+  <requestHandler name="/dataimport" class="org.apache.solr.handler.dataimport.DataImportHandler">
+    <lst name="defaults">
+      <str name="config">data-config.xml</str>
+    </lst>
+  </requestHandler>
 
   <initParams path="/update/**,/query,/select,/spell">
     <lst name="defaults">
