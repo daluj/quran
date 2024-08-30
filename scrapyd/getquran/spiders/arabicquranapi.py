@@ -1,54 +1,29 @@
 import json
 import scrapy
-import re
 from getquran.items import VerseItem, SurahItem
 
 class ApiQuranSpider(scrapy.Spider):
     name = 'arabicquranapi'
-    base_url = 'https://api.quran.com/api/v4/'
-    start_urls = [f"{base_url}chapters"]
+    start_urls = ['https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran.json']
 
     def parse(self, response):
         # Parse the JSON response
-        try:
-            data = response.json()
-        except ValueError:
-            self.logger.error("Failed to parse JSON from response")
-            return
-
-        surahs = data.get('chapters', [])
+        surahs = json.loads(response.text)
 
         for surah in surahs:
-            surah_id = surah.get('id')
+            surah_id = surah['id']
 
             surah_item = SurahItem()
             surah_item['id'] = surah_id
-            surah_item['name'] = surah.get('name_arabic')
-            surah_item['verses_count'] = surah.get('verses_count')
+            surah_item['name'] = json.dumps(surah['name'], ensure_ascii=True)
+            surah_item['verses_count'] = surah['total_verses']
             surah_item['english_name'] = 'Surah ' + str(surah_id)
-            surah_item['bismillah_pre'] = surah.get('bismillah_pre')
 
             yield surah_item
 
-            # Create a new request to fetch the verses of the surah
-            url = f"{self.base_url}/verses/by_chapter/{surah_id}?fields=text_uthmani,text_uthmani_simple"
-            yield scrapy.Request(url,callback=self.parse_surah_verses,meta={'surah_id': surah_id})
-
-    def parse_surah_verses(self, response):
-        surah_id = response.meta['surah_id']
-
-        # Parse the JSON response for detailed surah information
-        try:
-            data = response.json()
-        except ValueError:
-            self.logger.error("Failed to parse JSON from response")
-            return
-        
-        verses = data.get('verses',[])
-
-        verse_item = VerseItem()
-        verse_item['surah_id'] = surah_id
-        for verse in verses:
-            verse_item['id'] = verse.get('verse_number')
-            verse_item['ar'] = json.dumps(verse.get('text_uthmani_simple').strip(), ensure_ascii=True)
-            yield verse_item
+            verse_item = VerseItem()
+            verse_item['surah_id'] = surah_id
+            for verse in surah['verses']:
+                verse_item['verse_id'] = verse['id']
+                verse_item['ar'] = json.dumps(verse['text'], ensure_ascii=True)
+                yield verse_item

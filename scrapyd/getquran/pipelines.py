@@ -40,12 +40,9 @@ class PostgresPipeline:
         if isinstance(item, SurahItem):
             try:
                 self.cursor.execute("""
-                    INSERT INTO surah (id, name, english_name, verses_count, bismillah_pre)
-                    VALUES (%s, %s, %s, %s, %s)
-                    ON CONFLICT (id) 
-                    DO UPDATE SET name = EXCLUDED.name, english_name = EXCLUDED.english_name, 
-                                  verses_count = EXCLUDED.verses_count, bismillah_pre = EXCLUDED.bismillah_pre;
-                """, (item['id'], item['name'], item['english_name'], item['verses_count'], item['bismillah_pre']))
+                    INSERT INTO surah (id, name, english_name, verses_count)
+                    VALUES (%s, %s, %s, %s);
+                """, (item['id'], item['name'], item['english_name'], item['verses_count']))
             except Exception as e:
                 self.connection.rollback()
                 spider.logger.error(f"Error inserting or updating surah: {e}")
@@ -53,11 +50,9 @@ class PostgresPipeline:
         elif isinstance(item, VerseItem):
             try:
                 self.cursor.execute("""
-                    INSERT INTO verses (surah_id, id, ar)
-                    VALUES (%s, %s, %s)
-                    ON CONFLICT (surah_id, id)
-                    DO UPDATE SET ar = EXCLUDED.ar;
-                """, (item['surah_id'], item['id'], item['ar']))
+                    INSERT INTO verses (surah_id, verse_id, ar)
+                    VALUES (%s, %s, %s);
+                """, (item['surah_id'], item['verse_id'], item['ar']))
             except Exception as e:
                 self.connection.rollback()
                 spider.logger.error(f"Error inserting or updating verse: {e}")
@@ -69,11 +64,10 @@ class PostgresPipeline:
                 columns = self.get_table_columns('verses')
                 if language_column in columns:
                     self.cursor.execute(f"""
-                        INSERT INTO verses (surah_id, id, {language_column})
-                        VALUES (%s, %s, %s)
-                        ON CONFLICT (surah_id, id)
-                        DO UPDATE SET {language_column} = EXCLUDED.{language_column};
-                    """, (item['surah_id'], item['verse_id'], item['text']))
+                        UPDATE verses
+                        SET {language_column} = %s
+                        WHERE surah_id = %s AND verse_id = %s;
+                    """, (item['text'], item['surah_id'], item['verse_id']))
                 else:
                     spider.logger.error(f"Column '{language_column}' does not exist in the 'verses' table.")
             except Exception as e:

@@ -14,7 +14,7 @@ class SurahItem(scrapy.Item):
 
 class VerseItem(scrapy.Item):
     surah_id = scrapy.Field()
-    id = scrapy.Field()
+    verse_id = scrapy.Field()
     ar = scrapy.Field()
     en = scrapy.Field()
 
