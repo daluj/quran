@@ -9,6 +9,7 @@ class ApiQuranSpider(scrapy.Spider):
 
     def parse(self, response):
         # Parse the JSON response
+        response = response.replace(encoding='utf-8')
         surahs = response.json()
 
         for surah in surahs:
