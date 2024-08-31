@@ -40,7 +40,7 @@ The spiders are located in scrapyd/getquran/spiders.
 
 ### arabicquranapi Spider
 
-This spider fetches the quran in Arabic from [Quran.com](https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran.json) and saves the data to the DB.
+This spider fetches the quran in Arabic from [Quran](https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/quran.json) and saves the data to the DB.
 
 ### englishquranweb Spider
 
