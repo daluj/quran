@@ -19,6 +19,7 @@ DB_SETTINGS = {
     'database': os.environ['DB_DATABASE'],
     'user': os.environ['DB_USER'],
     'password': os.environ['DB_PASSWORD'],
+    'options': '-c client_encoding=UTF8'
 }
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent

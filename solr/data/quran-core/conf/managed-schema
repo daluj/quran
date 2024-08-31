@@ -523,4 +523,5 @@
   <dynamicField name="*_f" type="pfloat" indexed="true" stored="true"/>
   <dynamicField name="*_d" type="pdouble" indexed="true" stored="true"/>
   <dynamicField name="*_p" type="location" indexed="true" stored="true"/>
+  <dynamicField name="*" type="text_general" indexed="true" stored="true"/>
 </schema>

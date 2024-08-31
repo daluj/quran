@@ -2,8 +2,8 @@
   <dataSource type="JdbcDataSource"
               driver="org.postgresql.Driver"
               url="jdbc:postgresql://localhost:5432/quran"
-              user="scraper"
-              password="pass" />
+              user="david"
+              password="david" />
 
   <document>
     <entity name="verses"
@@ -13,7 +13,8 @@
       <field column="surah_id" name="surah_id" />
       <field column="verse_id" name="verse_id" />
       
-      <!-- Add fields for each column -->
+      <!-- Add dynamic field-->
+      <field column="*" name="${dataField}" />
     </entity>
   </document>
 </dataConfig>
