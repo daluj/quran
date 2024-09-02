@@ -1,16 +1,16 @@
-# Intro
+# In the name of God, the Almighty, the Merciful
 
-This repo is for the purpose of demonstrating how to deploy a scraper using scrapy, scrapyd, scrapydweb, a PostgreSQL database and Directus together, with docker-compose.
+Peace be with you. 
 
-# How to run it on local
+This project consists on creating a backend digital infraestructure for The Quran. There are 3 main technologies used for this project:
 
-1. Ensure Permissions Locally:
+- [Scrapy](https://scrapy.org/): Scrapy is used to fetch data from any data source (be it API or crawl through a website)
+- [Directus](https://directus.io/): Directus is used as a powerful BaaS (Backend As A Service) tool.
+- [Solr](https://solr.apache.org/): Solr is used as a powerful tool for text searching The Quran. 
 
-```bash
-chmod +x ./solr/entrypoint.sh
-```
+# Installation
 
-2. Build and Start Containers:
+Build and Start Containers
 
 ``` bash
 docker compose up --build -d
