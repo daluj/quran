@@ -2,8 +2,8 @@
   <dataSource type="JdbcDataSource"
               driver="org.postgresql.Driver"
               url="jdbc:postgresql://localhost:5432/quran"
-              user="david"
-              password="david" />
+              user="dawud"
+              password="dawud" />
 
   <document>
     <entity name="verses"
