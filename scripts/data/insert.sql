@@ -1,4 +1,4 @@
-INSERT INTO surahs (id, english_name, verses_count) VALUES ('1', 'Surah 1', '7');
+INSERT INTO surahs (id, english_name, verses_count,bismillah_pre) VALUES ('1', 'Surah 1', '7',0);
 INSERT INTO surahs (id, english_name, verses_count) VALUES ('2', 'Surah 2', '286');
 INSERT INTO surahs (id, english_name, verses_count) VALUES ('3', 'Surah 3', '200');
 INSERT INTO surahs (id, english_name, verses_count) VALUES ('4', 'Surah 4', '176');
