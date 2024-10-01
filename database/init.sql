@@ -4,7 +4,7 @@
 \c quran;
 
 -- Create table for Surahs
-CREATE TABLE IF NOT EXISTS surah (
+CREATE TABLE IF NOT EXISTS surahs (
     id INT PRIMARY KEY,
     name TEXT NOT NULL,
     english_name TEXT NOT NULL,
@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS surah (
 CREATE TABLE IF NOT EXISTS verses (
     id SERIAL PRIMARY KEY,              -- Unique identifier for each verse
     verse_id INT NOT NULL,              -- Verse Id
-    surah_id INT NOT NULL REFERENCES surah(id),  -- Foreign key from the surah table
+    surah_id INT NOT NULL REFERENCES surahs(id),  -- Foreign key from the surah table
     ar VARCHAR(50000),                  -- Arabic text
     en VARCHAR(50000),                  -- English text
     UNIQUE (surah_id, verse_id)         -- Composite unique key
