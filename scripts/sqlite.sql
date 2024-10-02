@@ -6,6 +6,13 @@ CREATE TABLE IF NOT EXISTS surahs (
     bismillah_pre INTEGER DEFAULT 1      -- BOOLEAN as INTEGER (0 or 1)
 );
 
+-- Create virtual table for Verses with FTS4
+CREATE VIRTUAL TABLE IF NOT EXISTS verses_text_search USING fts4 (
+    verse_id,              -- Verse Id (text for FTS4 search purposes)
+    surah_id,              -- Surah Id (text for FTS4 search purposes)
+    en TEXT NOT NULL       -- English text for full-text search
+);
+
 -- Create table for Verses
 CREATE TABLE IF NOT EXISTS verses (
     verse_id INTEGER NOT NULL,             -- Verse Id
