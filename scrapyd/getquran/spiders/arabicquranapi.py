@@ -17,9 +17,9 @@ class ApiQuranSpider(scrapy.Spider):
 
             surah_item = SurahItem()
             surah_item['id'] = surah_id
-            surah_item['name'] = surah.get('name','').strip()
+            #surah_item['name'] = surah.get('name','').strip()
             surah_item['verses_count'] = surah.get('total_verses','')
-            surah_item['english_name'] = 'Surah ' + str(surah_id)
+            #surah_item['english_name'] = 'Surah ' + str(surah_id)
 
             yield surah_item
 

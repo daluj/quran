@@ -40,7 +40,7 @@ class PostgresPipeline:
         if isinstance(item, SurahItem):
             try:
                 self.cursor.execute("""
-                    INSERT INTO surah (id, name, english_name, verses_count)
+                    INSERT INTO surahs (id, name, english_name, verses_count)
                     VALUES (%s, %s, %s, %s);
                 """, (item['id'], item['name'], item['english_name'], item['verses_count']))
             except Exception as e:
