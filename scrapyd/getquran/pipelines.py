@@ -51,7 +51,10 @@ class PostgresPipeline:
             try:
                 self.cursor.execute("""
                     INSERT INTO verses (surah_id, verse_id, ar)
-                    VALUES (%s, %s, %s);
+                    VALUES (%s, %s, %s)
+                    ON CONFLICT (surah_id,verse_id)                
+                    DO UPDATE SET
+                        ar = EXCLUDED.ar;
                 """, (item['surah_id'], item['verse_id'], item['ar']))
             except Exception as e:
                 self.connection.rollback()
