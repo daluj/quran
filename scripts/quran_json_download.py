@@ -10,11 +10,11 @@ response = requests.get("https://cdn.jsdelivr.net/npm/quran-json@3.1.2/dist/qura
 data = response.json()
 
 # write to JSON file
-with open("data/quran.json", 'w', encoding='utf-8') as outfile:
+with open("quran.json", 'w', encoding='utf-8') as outfile:
     json.dump(data, outfile, indent=4, ensure_ascii=False)
 
 response = requests.get("https://api.quran.com/api/v4/quran/verses/uthmani_simple")
 data = response.json()
 # write to JSON file
-with open("data/quran_uthmani_simple.json", 'w', encoding='utf-8') as outfile:
+with open("quran_uthmani_simple.json", 'w', encoding='utf-8') as outfile:
     json.dump(data, outfile, indent=4, ensure_ascii=False)
