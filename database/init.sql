@@ -31,6 +31,17 @@ CREATE TABLE IF NOT EXISTS translations (
     request_count INT DEFAULT 0         -- Request count
 );
 
+CREATE TABLE IF NOT EXISTS quran_index (
+    id INTEGER PRIMARY KEY,  -- Unique identifier for each entry
+    phrase TEXT NOT NULL,                  -- Word or phrase being indexed
+    language_code TEXT NOT NULL,           -- Language of the word/phrase (e.g., 'en', 'ar')
+    type TEXT NOT NULL,                    -- Type of the word/phrase (e.g., 'noun', 'verb', 'concept')
+    surah_id INTEGER NOT NULL,             -- Surah ID where the phrase occurs
+    verse_id INTEGER NOT NULL,             -- Verse ID where the phrase occurs
+    UNIQUE (phrase, language_code, type, surah_id, verse_id) 
+    -- Ensure no duplicate entries for the same phrase, language, type, surah, and verse
+);
+
 -- Index for faster lookups in verses
 CREATE INDEX idx_verses_surah_id ON verses(surah_id);
 

@@ -6,13 +6,6 @@ CREATE TABLE IF NOT EXISTS surahs (
     bismillah_pre INTEGER DEFAULT 1      -- BOOLEAN as INTEGER (0 or 1)
 );
 
--- Create virtual table for Verses with FTS4
-CREATE VIRTUAL TABLE IF NOT EXISTS verses_text_search USING fts4 (
-    verse_id,              -- Verse Id (text for FTS4 search purposes)
-    surah_id,              -- Surah Id (text for FTS4 search purposes)
-    en TEXT NOT NULL       -- English text for full-text search
-);
-
 -- Create table for Verses
 CREATE TABLE IF NOT EXISTS verses (
     verse_id INTEGER NOT NULL,             -- Verse Id
@@ -20,6 +13,17 @@ CREATE TABLE IF NOT EXISTS verses (
     en TEXT NOT NULL,                      -- English text
     UNIQUE (surah_id, verse_id),           -- Composite unique key
     FOREIGN KEY (surah_id) REFERENCES surahs(id)  -- Foreign key constraint
+);
+
+CREATE TABLE IF NOT EXISTS quran_index (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,  -- Unique identifier for each entry
+    phrase TEXT NOT NULL,                  -- Word or phrase being indexed
+    language_code TEXT NOT NULL,           -- Language of the word/phrase (e.g., 'en', 'ar')
+    type TEXT NOT NULL,                    -- Type of the word/phrase (e.g., 'noun', 'verb', 'concept')
+    surah_id INTEGER NOT NULL,             -- Surah ID where the phrase occurs
+    verse_id INTEGER NOT NULL,             -- Verse ID where the phrase occurs
+    UNIQUE (phrase, language_code, type, surah_id, verse_id) 
+    -- Ensure no duplicate entries for the same phrase, language, type, surah, and verse
 );
 
 -- Index for faster lookups in verses
