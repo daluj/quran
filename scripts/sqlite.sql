@@ -15,13 +15,31 @@ CREATE TABLE IF NOT EXISTS verses (
     FOREIGN KEY (surah_id) REFERENCES surahs(id)  -- Foreign key constraint
 );
 
-CREATE TABLE IF NOT EXISTS notes (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,   -- Unique identifier for each note
+CREATE TABLE IF NOT EXISTS comments (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,   -- Unique identifier for each comment
     verse_id INTEGER NOT NULL,              -- References a specific verse in the verses table
-    surah_id INTEGER NOT NULL,              -- Redundant reference for convenience, ties to the surah of the verse
-    notes TEXT,                             -- The user's notes for this verse
+    surah_id INTEGER NOT NULL,              -- References the sura
+    comment TEXT,                           -- The user's comment for this verse
     last_updated DATETIME DEFAULT CURRENT_TIMESTAMP, -- Timestamp for when the entry was last updated
-    UNIQUE (verse_id),                      -- Ensure only one note per verse
+    UNIQUE (verse_id),                      -- Ensure only one comment per verse
+    FOREIGN KEY (verse_id) REFERENCES verses(id),    -- Foreign key constraint
+    FOREIGN KEY (surah_id) REFERENCES surahs(id)     -- Foreign key constraint
+);
+
+CREATE TABLE IF NOT EXISTS journal (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,   -- Unique identifier for each journal entry
+    entry_date DATE NOT NULL,               -- The date for this journal entry
+    reflections TEXT,                       -- The user's reflections for the day
+    last_updated DATETIME DEFAULT CURRENT_TIMESTAMP, -- Timestamp of the last update
+    UNIQUE (entry_date)            -- Ensures only one journal entry per day
+);
+
+CREATE TABLE IF NOT EXISTS journal_verses (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,   -- Unique identifier for each journal-verse mapping
+    journal_id INTEGER NOT NULL,            -- Foreign key referencing the journal entry
+    verse_id INTEGER NOT NULL,              -- Foreign key referencing a verse
+    surah_id INTEGER NOT NULL,              -- Foreign key referencing a sura
+    FOREIGN KEY (journal_id) REFERENCES journal(id) ON DELETE CASCADE, -- Ensures dependent records are deleted
     FOREIGN KEY (verse_id) REFERENCES verses(id),    -- Foreign key constraint
     FOREIGN KEY (surah_id) REFERENCES surahs(id)     -- Foreign key constraint
 );
