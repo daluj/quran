@@ -22,8 +22,8 @@ CREATE TABLE IF NOT EXISTS notes (
     notes TEXT,                             -- The user's notes for this verse
     last_updated DATETIME DEFAULT CURRENT_TIMESTAMP, -- Timestamp for when the entry was last updated
     UNIQUE (verse_id),                      -- Ensure only one note per verse
-    FOREIGN KEY (verse_id) REFERENCES verses(id),    -- Foreign key constraint without ON DELETE CASCADE
-    FOREIGN KEY (surah_id) REFERENCES surahs(id)     -- Foreign key constraint without ON DELETE CASCADE
+    FOREIGN KEY (verse_id) REFERENCES verses(id),    -- Foreign key constraint
+    FOREIGN KEY (surah_id) REFERENCES surahs(id)     -- Foreign key constraint
 );
 
 -- Index for faster lookups in verses
