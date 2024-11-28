@@ -44,6 +44,17 @@ CREATE TABLE IF NOT EXISTS journal_verses (
     FOREIGN KEY (surah_id) REFERENCES surahs(id)     -- Foreign key constraint
 );
 
+CREATE TABLE IF NOT EXISTS glossary (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,      -- Unique identifier for each glossary entry
+    word TEXT NOT NULL COLLATE NOCASE,         -- The word being defined (case-insensitive)
+    en TEXT NOT NULL,                          -- The English definition or explanation
+    UNIQUE (word COLLATE NOCASE)               -- Ensures each word is unique, ignoring case
+);
+
+
+-- Create an index for faster search on glossary
+CREATE INDEX IF NOT EXISTS idx_glossary_word ON glossary(word);
+
 -- Index for faster lookups in verses
 CREATE INDEX IF NOT EXISTS idx_verses_surah_id ON verses(surah_id);
 
