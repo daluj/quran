@@ -15,15 +15,15 @@ CREATE TABLE IF NOT EXISTS verses (
     FOREIGN KEY (surah_id) REFERENCES surahs(id)  -- Foreign key constraint
 );
 
-CREATE TABLE IF NOT EXISTS quran_index (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,  -- Unique identifier for each entry
-    phrase TEXT NOT NULL,                  -- Word or phrase being indexed
-    language_code TEXT NOT NULL,           -- Language of the word/phrase (e.g., 'en', 'ar')
-    type TEXT NOT NULL,                    -- Type of the word/phrase (e.g., 'noun', 'verb', 'concept')
-    surah_id INTEGER NOT NULL,             -- Surah ID where the phrase occurs
-    verse_id INTEGER NOT NULL,             -- Verse ID where the phrase occurs
-    UNIQUE (phrase, language_code, type, surah_id, verse_id) 
-    -- Ensure no duplicate entries for the same phrase, language, type, surah, and verse
+CREATE TABLE IF NOT EXISTS notes (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,   -- Unique identifier for each note
+    verse_id INTEGER NOT NULL,              -- References a specific verse in the verses table
+    surah_id INTEGER NOT NULL,              -- Redundant reference for convenience, ties to the surah of the verse
+    notes TEXT,                             -- The user's notes for this verse
+    last_updated DATETIME DEFAULT CURRENT_TIMESTAMP, -- Timestamp for when the entry was last updated
+    UNIQUE (verse_id),                      -- Ensure only one note per verse
+    FOREIGN KEY (verse_id) REFERENCES verses(id),    -- Foreign key constraint without ON DELETE CASCADE
+    FOREIGN KEY (surah_id) REFERENCES surahs(id)     -- Foreign key constraint without ON DELETE CASCADE
 );
 
 -- Index for faster lookups in verses
