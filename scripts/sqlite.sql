@@ -19,11 +19,9 @@ CREATE TABLE IF NOT EXISTS comments (
     id INTEGER PRIMARY KEY AUTOINCREMENT,   -- Unique identifier for each comment
     verse_id INTEGER NOT NULL,              -- References a specific verse in the verses table
     surah_id INTEGER NOT NULL,              -- References the sura
-    comment TEXT,                           -- The user's comment for this verse
+    comment_text TEXT,                           -- The user's comment for this verse
     last_updated DATETIME DEFAULT CURRENT_TIMESTAMP, -- Timestamp for when the entry was last updated
-    UNIQUE (surah_id,verse_id),                      -- Ensure only one comment per verse
-    FOREIGN KEY (verse_id) REFERENCES verses(id),    -- Foreign key constraint
-    FOREIGN KEY (surah_id) REFERENCES surahs(id)     -- Foreign key constraint
+    UNIQUE (surah_id,verse_id)                       -- Ensure only one comment per verse
 );
 
 CREATE TABLE IF NOT EXISTS journal (
