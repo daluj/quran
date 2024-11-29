@@ -21,7 +21,7 @@ CREATE TABLE IF NOT EXISTS comments (
     surah_id INTEGER NOT NULL,              -- References the sura
     comment TEXT,                           -- The user's comment for this verse
     last_updated DATETIME DEFAULT CURRENT_TIMESTAMP, -- Timestamp for when the entry was last updated
-    UNIQUE (verse_id),                      -- Ensure only one comment per verse
+    UNIQUE (surah_id,verse_id),                      -- Ensure only one comment per verse
     FOREIGN KEY (verse_id) REFERENCES verses(id),    -- Foreign key constraint
     FOREIGN KEY (surah_id) REFERENCES surahs(id)     -- Foreign key constraint
 );
