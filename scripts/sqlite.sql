@@ -56,5 +56,8 @@ CREATE INDEX IF NOT EXISTS idx_glossary_word ON glossary(word);
 -- Index for faster lookups in verses
 CREATE INDEX IF NOT EXISTS idx_verses_surah_id ON verses(surah_id);
 
+-- Index for faster lookups in comments
+CREATE INDEX IF NOT EXISTS idx_comments_surah_verse_id ON comments(surah_id, verse_id);
+
 -- If you frequently query verses based on both surah_id and verse_id together
 CREATE INDEX IF NOT EXISTS idx_verses_surah_verse_id ON verses(surah_id, verse_id);
