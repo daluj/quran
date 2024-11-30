@@ -1,7 +1,6 @@
 -- Create table for Surahs
 CREATE TABLE IF NOT EXISTS surahs (
     id INTEGER PRIMARY KEY,              -- Primary key
-    english_name TEXT NOT NULL,          
     verses_count INTEGER NOT NULL,       -- Number of verses
     bismillah_pre INTEGER DEFAULT 1      -- BOOLEAN as INTEGER (0 or 1)
 );
@@ -37,9 +36,7 @@ CREATE TABLE IF NOT EXISTS journal_verses (
     journal_id INTEGER NOT NULL,            -- Foreign key referencing the journal entry
     verse_id INTEGER NOT NULL,              -- Foreign key referencing a verse
     surah_id INTEGER NOT NULL,              -- Foreign key referencing a sura
-    FOREIGN KEY (journal_id) REFERENCES journal(id) ON DELETE CASCADE, -- Ensures dependent records are deleted
-    FOREIGN KEY (verse_id) REFERENCES verses(id),    -- Foreign key constraint
-    FOREIGN KEY (surah_id) REFERENCES surahs(id)     -- Foreign key constraint
+    FOREIGN KEY (journal_id) REFERENCES journal(id) ON DELETE CASCADE -- Ensures dependent records are deleted
 );
 
 CREATE TABLE IF NOT EXISTS glossary (
