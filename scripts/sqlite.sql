@@ -19,16 +19,15 @@ CREATE TABLE IF NOT EXISTS comments (
     verse_id INTEGER NOT NULL,              -- References a specific verse in the verses table
     surah_id INTEGER NOT NULL,              -- References the sura
     comment_text TEXT,                           -- The user's comment for this verse
-    last_updated DATETIME DEFAULT CURRENT_TIMESTAMP, -- Timestamp for when the entry was last updated
+    last_updated INTEGER, -- Timestamp for when the entry was last updated
     UNIQUE (surah_id,verse_id)                       -- Ensure only one comment per verse
 );
 
 CREATE TABLE IF NOT EXISTS journal (
     id INTEGER PRIMARY KEY AUTOINCREMENT,   -- Unique identifier for each journal entry
-    entry_date DATE NOT NULL,               -- The date for this journal entry
+    entry_date INTEGER NOT NULL,               -- The date for this journal entry
     reflections TEXT,                       -- The user's reflections for the day
-    last_updated DATETIME DEFAULT CURRENT_TIMESTAMP, -- Timestamp of the last update
-    UNIQUE (entry_date)            -- Ensures only one journal entry per day
+    title TEXT
 );
 
 CREATE TABLE IF NOT EXISTS journal_verses (
@@ -36,7 +35,10 @@ CREATE TABLE IF NOT EXISTS journal_verses (
     journal_id INTEGER NOT NULL,            -- Foreign key referencing the journal entry
     verse_id INTEGER NOT NULL,              -- Foreign key referencing a verse
     surah_id INTEGER NOT NULL,              -- Foreign key referencing a sura
-    FOREIGN KEY (journal_id) REFERENCES journal(id) ON DELETE CASCADE -- Ensures dependent records are deleted
+    UNIQUE("journal_id","surah_id","verse_id"),
+    FOREIGN KEY (journal_id) REFERENCES journal(id) ON DELETE CASCADE, -- Ensures dependent records are deleted
+    FOREIGN KEY("surah_id") REFERENCES "verses"("surah_id"),
+	FOREIGN KEY("verse_id") REFERENCES "verses"("verse_id")
 );
 
 CREATE TABLE IF NOT EXISTS glossary (
