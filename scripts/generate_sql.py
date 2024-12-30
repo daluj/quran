@@ -34,7 +34,7 @@ def fetch_data_and_generate_sql(surah_numbers, per_page, output_file="output.sql
                     
                     verse_insert = f"""
 INSERT INTO verses (surah_id, verse_id, ar, transliteration) 
-VALUES ({surah_id}, {verse_id}, "{arabic_text}" , "{transliteration_text}" )
+VALUES ({surah_id}, {verse_id}, " {arabic_text} " , "{transliteration_text}" )
 ON CONFLICT(surah_id, verse_id) DO UPDATE SET 
     ar = excluded.ar,
     transliteration = excluded.transliteration;
