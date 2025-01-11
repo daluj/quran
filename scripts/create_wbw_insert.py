@@ -27,8 +27,7 @@ def fetch_data_and_generate_sql(surah_numbers, per_page, output_file="output_wor
                             transliteration_text = word.get("transliteration", {}).get("text", "")
 
                             word_insert = f"""
-INSERT INTO words (surah_id, verse_id, position_id, ar, transliteration) 
-VALUES ({surah_id}, {verse_id}, {position_id}, "{arabic_text}", "{transliteration_text}");
+INSERT INTO words (surah_id, verse_id, position_id, ar, transliteration) VALUES ({surah_id}, {verse_id}, {position_id}, "{arabic_text}", "{transliteration_text}");
                             """
                             sql_file.write(word_insert.strip() + "\n")
 
